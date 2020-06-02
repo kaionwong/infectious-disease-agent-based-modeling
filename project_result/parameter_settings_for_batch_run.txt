@@ -1,0 +1,105 @@
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+Batch run set up
+--------------------------------------------------
+run_batch.py
+
+br_params = {
+    'num_nodes': [10000],
+    'avg_node_degree': [10],
+    'initial_outbreak_size': [2],
+
+    'prob_spread_virus_gamma_shape': [1, 2],
+    'prob_spread_virus_gamma_scale': [3, 4, 5],
+    'prob_spread_virus_gamma_loc': [0],
+    'prob_spread_virus_gamma_magnitude_multiplier': [0.15, 0.25],
+
+    'prob_recover_gamma_shape': [7],
+    'prob_recover_gamma_scale': [3],
+    'prob_recover_gamma_loc': [0],
+    'prob_recover_gamma_magnitude_multiplier': [0.50, 0.75],
+
+    'prob_virus_kill_host_gamma_shape': [4, 5],
+    'prob_virus_kill_host_gamma_scale': [3, 4],
+    'prob_virus_kill_host_gamma_loc': [0],
+    'prob_virus_kill_host_gamma_magnitude_multiplier': [0.04, 0.07],
+
+    'prob_infectious_no_to_mild_symptom_gamma_shape': [4.1],
+    'prob_infectious_no_to_mild_symptom_gamma_scale': [1],
+    'prob_infectious_no_to_mild_symptom_gamma_loc': [0],
+    'prob_infectious_no_to_mild_symptom_gamma_magnitude_multiplier': [0.75],
+
+    'prob_infectious_no_to_severe_symptom_gamma_shape': [1],
+    'prob_infectious_no_to_severe_symptom_gamma_scale': [2],
+    'prob_infectious_no_to_severe_symptom_gamma_loc': [0],
+    'prob_infectious_no_to_severe_symptom_gamma_magnitude_multiplier': [0.1],
+
+    'prob_infectious_no_to_critical_symptom_gamma_shape': [1],
+    'prob_infectious_no_to_critical_symptom_gamma_scale': [2.8],
+    'prob_infectious_no_to_critical_symptom_gamma_loc': [0],
+    'prob_infectious_no_to_critical_symptom_gamma_magnitude_multiplier': [0.15],
+
+    'prob_infectious_mild_to_no_symptom_gamma_shape': [3],
+    'prob_infectious_mild_to_no_symptom_gamma_scale': [3],
+    'prob_infectious_mild_to_no_symptom_gamma_loc': [0],
+    'prob_infectious_mild_to_no_symptom_gamma_magnitude_multiplier': [0.25],
+
+    'prob_infectious_mild_to_severe_symptom_gamma_shape': [4.9],
+    'prob_infectious_mild_to_severe_symptom_gamma_scale': [2.2],
+    'prob_infectious_mild_to_severe_symptom_gamma_loc': [0],
+    'prob_infectious_mild_to_severe_symptom_gamma_magnitude_multiplier': [0.11],
+
+    'prob_infectious_mild_to_critical_symptom_gamma_shape': [3.3],
+    'prob_infectious_mild_to_critical_symptom_gamma_scale': [3.1],
+    'prob_infectious_mild_to_critical_symptom_gamma_loc': [0],
+    'prob_infectious_mild_to_critical_symptom_gamma_magnitude_multiplier': [0.11],
+
+    'prob_infectious_severe_to_no_symptom_gamma_shape': [3],
+    'prob_infectious_severe_to_no_symptom_gamma_scale': [2],
+    'prob_infectious_severe_to_no_symptom_gamma_loc': [0],
+    'prob_infectious_severe_to_no_symptom_gamma_magnitude_multiplier': [0.001],
+
+    'prob_infectious_severe_to_mild_symptom_gamma_shape': [5],
+    'prob_infectious_severe_to_mild_symptom_gamma_scale': [3],
+    'prob_infectious_severe_to_mild_symptom_gamma_loc': [0],
+    'prob_infectious_severe_to_mild_symptom_gamma_magnitude_multiplier': [0.001],
+
+    'prob_infectious_severe_to_critical_symptom_gamma_shape': [7],
+    'prob_infectious_severe_to_critical_symptom_gamma_scale': [3],
+    'prob_infectious_severe_to_critical_symptom_gamma_loc': [0],
+    'prob_infectious_severe_to_critical_symptom_gamma_magnitude_multiplier': [0.01],
+
+    'prob_infectious_critical_to_no_symptom_gamma_shape': [7],
+    'prob_infectious_critical_to_no_symptom_gamma_scale': [1],
+    'prob_infectious_critical_to_no_symptom_gamma_loc': [0],
+    'prob_infectious_critical_to_no_symptom_gamma_magnitude_multiplier': [0.001],
+
+    'prob_infectious_critical_to_mild_symptom_gamma_shape': [4],
+    'prob_infectious_critical_to_mild_symptom_gamma_scale': [2],
+    'prob_infectious_critical_to_mild_symptom_gamma_loc': [0],
+    'prob_infectious_critical_to_mild_symptom_gamma_magnitude_multiplier': [0.001],
+
+    'prob_infectious_critical_to_severe_symptom_gamma_shape': [5],
+    'prob_infectious_critical_to_severe_symptom_gamma_scale': [2],
+    'prob_infectious_critical_to_severe_symptom_gamma_loc': [0],
+    'prob_infectious_critical_to_severe_symptom_gamma_magnitude_multiplier': [0.25],
+
+    'prob_recovered_no_to_mild_complication': [0.016],
+    'prob_recovered_no_to_severe_complication': [0],
+    'prob_recovered_mild_to_no_complication': [0.02],
+    'prob_recovered_mild_to_severe_complication': [0.02],
+    'prob_recovered_severe_to_no_complication': [0.001],
+    'prob_recovered_severe_to_mild_complication': [0.001],
+    'prob_gain_immunity': [0.005],
+
+    'hospital_bed_capacity_as_percent_of_population': [0.10],
+    'hospital_bed_cost_per_day': [2000],
+    'icu_bed_capacity_as_percent_of_population': [0.10],
+    'icu_bed_cost_per_day': [3000],
+    'ventilator_capacity_as_percent_of_population': [0.1],
+    'ventilator_cost_per_day': [100],
+    'drugX_capacity_as_percent_of_population': [0.1],
+    'drugX_cost_per_day': [20],
+}

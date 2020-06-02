@@ -1,0 +1,7 @@
+gitpython
+matplotlib
+mesa
+networkx==2.2
+scipy
+seaborn
+statsmodels

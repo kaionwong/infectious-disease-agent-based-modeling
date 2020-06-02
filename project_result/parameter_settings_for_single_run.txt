@@ -1,0 +1,339 @@
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+Run #1 set up
+--------------------------------------------------
+agent.py
+
+def try_recover_from_infection(self):
+        prob_recover_with_no_complication = 0.70 # Setting: Assumed
+        prob_recover_with_mild_complication = 0.20 # Setting: Assumed
+        prob_recover_with_severe_complication = 0.10 # Setting: Assumed
+
+def update_probability_by_special_condition(self):
+        modifier_from_hypertension = 0.05 # Setting: Assumed
+        modifier_from_diabetes = 0.05  # Setting: Assumed
+        modifier_from_ihd = 0.05  # Setting: Assumed
+        modifier_from_asthma = 0.05  # Setting: Assumed
+        modifier_from_cancer = 0.05  # Setting: Assumed
+        modifier_from_old_age = 0.05 # Setting: Assumed
+        modifier_from_severe_symptom = 0.05  # Setting: Assumed
+        modifier_from_critical_symptom = 0.05  # Setting: Assumed
+        modifier_from_critical_symptom_extra = 0.05/2  # Setting: Assumed
+        modifier_from_absence_of_adequate_care = 0.05 # Setting: Assumed
+
+network.py
+
+def __init__(self, ...):
+        self.testing = Testing(1, self, agent=None,
+                                prob_tested_for_no_symptom=[0.005, 0.01, 0.01],
+                                prob_tested_for_mild_symptom=[0.005, 0.01, 0.01],
+                                prob_tested_for_severe_symptom=[0.01, 0.03, 0.05],
+                                prob_tested_for_critical_symptom=[0.01, 0.03, 0.05],
+                                test_sensitivity=[0.89, 0.95, 0.95], test_specificity=[0.95, 0.99, 0.99],
+                                time_period=[(0, 25), (26, 60), (60, 999)], current_time=None, on_switch=True)
+
+        self.social_distancing = SocialDistancing(1, self, edge_threshold=[0.50],
+                                                  time_period=[(10, 999)], current_time=None,
+                                                  on_switch=False)
+
+        self.vaccine = Vaccine(1, self, agent=None, prob_vaccinated=[0.15],
+                               vaccine_success_rate=[0.80], time_period=[(20, 999)],
+                               current_time=None, on_switch=False)
+
+visualize.py
+
+# default value used for each of the following parameters, for example, 'num_nodes'==2000 and 'prob_recover_gamma_shape'==3.
+model_params = {
+    'num_nodes': UserSettableParameter(
+                'slider', 'Number of hosts', 1000, 5, 2000, 10, # 10000 is about max for computing power
+                description='Number of hosts at the beginning of the model'),
+    'avg_node_degree': UserSettableParameter(
+                'slider', 'Average connections per host', 10, 1, 20, 0.5,
+                description='Average number of node per host'),
+    'initial_outbreak_size': UserSettableParameter(
+                'slider', 'Initial number of infectious hosts', 2, 1, 25, 1,
+                description='Initial number of infectious hosts'),
+
+    'prob_spread_virus_gamma_shape': UserSettableParameter(
+                'slider', 'Shape param for virus spread prob', 1, 1.0, 30, 0.005,
+                description='Set shape param in gamma probability for an infectious host to infect a neighboring host'),
+    'prob_spread_virus_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for virus spread prob', 3, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for an infectious host to infect a neighboring host'),
+    'prob_spread_virus_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for virus spread prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for an infectious host to infect a neighboring host'),
+    'prob_spread_virus_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for virus spread prob', 0.35, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for an infectious host to infect a neighboring host'),
+
+    'prob_recover_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for recovery prob', 7, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for an infectious host to recovered'),
+    'prob_recover_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for recovery prob', 3, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for an infectious host to recovered'),
+    'prob_recover_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for recovery prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for an infectious host to recovered'),
+    'prob_recover_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for recovery prob', 0.75, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for an infectious host to recovered'),
+
+    'prob_virus_kill_host_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for host to die from virus prob', 5.2, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for an infectious host to die from virus'),
+    'prob_virus_kill_host_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for host to die from virus prob', 3.2, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for an infectious host to die from virus'),
+    'prob_virus_kill_host_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for host to die from virus prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for an infectious host to die from virus'),
+    'prob_virus_kill_host_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for host to die from virus prob', 0.069, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for an infectious host to die from virus'),
+
+    'prob_infectious_no_to_mild_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from no to mild symptom prob', 4.1, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for an asymptomatic infectious host to develop mild symptom'),
+    'prob_infectious_no_to_mild_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from no to mild symptom prob', 1, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for an asymptomatic infectious host to develop mild symptom'),
+    'prob_infectious_no_to_mild_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from no to mild symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for an asymptomatic infectious host to develop mild symptom'),
+    'prob_infectious_no_to_mild_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from no to mild symptom prob', 0.75, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for an asymptomatic infectious host to develop mild symptom'),
+
+    'prob_infectious_no_to_severe_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from no to severe symptom prob', 1, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for an asymptomatic infectious host to develop severe symptom'),
+    'prob_infectious_no_to_severe_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from no to severe symptom prob', 2, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for an asymptomatic infectious host to develop severe symptom'),
+    'prob_infectious_no_to_severe_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from no to severe symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for an asymptomatic infectious host to develop severe symptom'),
+    'prob_infectious_no_to_severe_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from no to severe symptom prob', 0.1, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for an asymptomatic infectious host to develop severe symptom'),
+
+    'prob_infectious_no_to_critical_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from no to critical symptom prob', 1, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for an asymptomatic infectious host to develop critical symptom'),
+    'prob_infectious_no_to_critical_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from no to critical symptom prob', 2.8, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for an asymptomatic infectious host to develop critical symptom'),
+    'prob_infectious_no_to_critical_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from no to critical symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for an asymptomatic infectious host to develop critical symptom'),
+    'prob_infectious_no_to_critical_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from no to critical symptom prob', 0.15, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for an asymptomatic infectious host to develop critical symptom'),
+
+    'prob_infectious_mild_to_no_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from mild to no symptom prob', 3, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a mild symptom infectious host to be asymptomatic'),
+    'prob_infectious_mild_to_no_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from mild to no symptom prob', 3, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a mild symptom infectious host to be asymptomatic'),
+    'prob_infectious_mild_to_no_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from mild to no symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a mild symptom infectious host to be asymptomatic'),
+    'prob_infectious_mild_to_no_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from mild to no symptom prob', 0.25, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a mild symptom infectious host to be asymptomatic'),
+
+    'prob_infectious_mild_to_severe_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from mild to severe symptom prob', 4.9, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a mild symptom infectious host to have severe symptoms'),
+    'prob_infectious_mild_to_severe_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from mild to severe symptom prob', 2.2, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a mild symptom infectious host to have severe symptoms'),
+    'prob_infectious_mild_to_severe_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from mild to severe symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a mild symptom infectious host to have severe symptoms'),
+    'prob_infectious_mild_to_severe_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from mild to severe symptom prob', 0.11, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a mild symptom infectious host to have severe symptoms'),
+
+    'prob_infectious_mild_to_critical_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from mild to critical symptom prob', 3.3, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a mild symptom infectious host to have critical symptoms'),
+    'prob_infectious_mild_to_critical_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from mild to critical symptom prob', 3.1, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a mild symptom infectious host to have critical symptoms'),
+    'prob_infectious_mild_to_critical_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from mild to critical symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a mild symptom infectious host to have critical symptoms'),
+    'prob_infectious_mild_to_critical_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from mild to critical symptom prob', 0.11, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a mild symptom infectious host to have critical symptoms'),
+
+    'prob_infectious_severe_to_no_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from severe to no symptom prob', 3, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a severe symptom infectious host to be asymptomatic'),
+    'prob_infectious_severe_to_no_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from severe to no symptom prob', 2, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a severe symptom infectious host to be asymptomatic'),
+    'prob_infectious_severe_to_no_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from severe to no symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a severe symptom infectious host to be asymptomatic'),
+    'prob_infectious_severe_to_no_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from severe to no symptom prob', 0.001, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a severe symptom infectious host to be asymptomatic'),
+
+    'prob_infectious_severe_to_mild_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from severe to mild symptom prob', 5, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a severe symptom infectious host to have mild symptoms'),
+    'prob_infectious_severe_to_mild_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from severe to mild symptom prob', 3, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a severe symptom infectious host to have mild symptoms'),
+    'prob_infectious_severe_to_mild_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from severe to mild symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a severe symptom infectious host to have mild symptoms'),
+    'prob_infectious_severe_to_mild_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from severe to mild symptom prob', 0.001, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a severe symptom infectious host to have mild symptoms'),
+
+    'prob_infectious_severe_to_critical_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from severe to critical symptom prob', 7, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a severe symptom infectious host to have critical symptoms'),
+    'prob_infectious_severe_to_critical_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from severe to critical symptom prob', 3, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a severe symptom infectious host to have critical symptoms'),
+    'prob_infectious_severe_to_critical_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from severe to critical symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a severe symptom infectious host to have critical symptoms'),
+    'prob_infectious_severe_to_critical_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from severe to critical symptom prob', 0.01, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a severe symptom infectious host to have critical symptoms'),
+
+    'prob_infectious_critical_to_no_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from critical to no symptom prob', 7, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a critical symptom infectious host to be asymptomatic'),
+    'prob_infectious_critical_to_no_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from critical to no symptom prob', 1, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a critical symptom infectious host to be asymptomatic'),
+    'prob_infectious_critical_to_no_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from critical to no symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a critical symptom infectious host to be asymptomatic'),
+    'prob_infectious_critical_to_no_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from critical to no symptom prob', 0.001, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a critical symptom infectious host to be asymptomatic'),
+
+    'prob_infectious_critical_to_mild_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from critical to mild symptom prob', 4, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a critical symptom infectious host to have mild symptoms'),
+    'prob_infectious_critical_to_mild_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from critical to mild symptom prob', 2, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a critical symptom infectious host to have mild symptoms'),
+    'prob_infectious_critical_to_mild_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from critical to mild symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a critical symptom infectious host to have mild symptoms'),
+    'prob_infectious_critical_to_mild_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from critical to mild symptom prob', 0.001, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a critical symptom infectious host to have mild symptoms'),
+
+    'prob_infectious_critical_to_severe_symptom_gamma_shape': UserSettableParameter(
+        'slider', 'Shape param for infectious from critical to severe symptom prob', 5, 1.0, 30, 0.005,
+        description='Set shape param in gamma probability for a critical symptom infectious host to have severe symptoms'),
+    'prob_infectious_critical_to_severe_symptom_gamma_scale': UserSettableParameter(
+        'slider', 'Scale param for infectious from critical to severe symptom prob', 2, 0.0, 30, 0.005,
+        description='Set scale param in gamma probability for a critical symptom infectious host to have severe symptoms'),
+    'prob_infectious_critical_to_severe_symptom_gamma_loc': UserSettableParameter(
+        'slider', 'Loc param for infectious from critical to severe symptom prob', 0, 0.0, 30, 0.5,
+        description='Set loc param in gamma probability for a critical symptom infectious host to have severe symptoms'),
+    'prob_infectious_critical_to_severe_symptom_gamma_magnitude_multiplier': UserSettableParameter(
+        'slider', 'MM param for infectious from critical to severe symptom prob', 0.25, 0.0, 1, 0.001,
+        description='Set magnitude multiplier param in gamma probability for a critical symptom infectious host to have severe symptoms'),
+
+    'prob_recovered_no_to_mild_complication': UserSettableParameter(
+                'slider', 'Prob from no to mild complications', 0.016, 0.0, 1.0, 0.001,
+                description='Probability from no to mild complications in recovered hosts'),
+    'prob_recovered_no_to_severe_complication': UserSettableParameter(
+                'slider', 'Prob from no to severe complications', 0.00, 0.0, 1.0, 0.001,
+                description='Probability from no to severe complications in recovered hosts'),
+    'prob_recovered_mild_to_no_complication': UserSettableParameter(
+                'slider', 'Prob from mild to no complications', 0.02, 0.0, 1.0, 0.001,
+                description='Probability from mild to no complications in recovered hosts'),
+    'prob_recovered_mild_to_severe_complication': UserSettableParameter(
+                'slider', 'Prob from mild to severe complications', 0.02, 0.0, 1.0, 0.001,
+                description='Probability from mild to severe complications in recovered hosts'),
+    'prob_recovered_severe_to_no_complication': UserSettableParameter(
+                'slider', 'Prob from severe to no complications', 0.001, 0.0, 1.0, 0.001,
+                description='Probability from severe to no complications in infectious hosts'),
+    'prob_recovered_severe_to_mild_complication': UserSettableParameter(
+                'slider', 'Prob from severe to mild complications', 0.001, 0.0, 1.0, 0.001,
+                description='Probability from severe to mild complications in recovered hosts'),
+
+    'prob_gain_immunity': UserSettableParameter(
+        'slider', 'Prob to gain immunity', 0.005, 0.0, 1, 0.001,
+        description='Probability a recovered host gains immunity against the virus'),
+
+    'hospital_bed_capacity_as_percent_of_population': UserSettableParameter(
+                'slider', 'Hospital bed capacity', 0.10, 0.0, 1.0, 0.05,
+                description='Hospital bed capacity as percent of population'),
+    'hospital_bed_cost_per_day': UserSettableParameter(
+                'slider', 'Hospitalization-related cost', 1000, 0, 100000, 500,
+                description='Hospitalization-related cost per day'),
+
+    'icu_bed_capacity_as_percent_of_population': UserSettableParameter(
+                'slider', 'ICU bed capacity', 0.10, 0.0, 1.0, 0.05,
+                description='ICU bed capacity as percent of population'),
+    'icu_bed_cost_per_day': UserSettableParameter(
+                'slider', 'ICU-related cost', 2000, 0, 100000, 500,
+                description='ICU-related cost per day'),
+
+    'ventilator_capacity_as_percent_of_population': UserSettableParameter(
+                'slider', 'Ventilator capacity', 0.10, 0.0, 1.0, 0.05,
+                description='Ventilator capacity as percent of population'),
+    'ventilator_cost_per_day': UserSettableParameter(
+                'slider', 'Ventilator-related cost', 100, 0, 5000, 100,
+                description='Ventilator-related cost per day'),
+
+    'drugX_capacity_as_percent_of_population': UserSettableParameter(
+        'slider', 'DrugX capacity', 0.3, 0.0, 200, 0.05,
+        description='DrugX capacity as percent of population'),
+    'drugX_cost_per_day': UserSettableParameter(
+        'slider', 'DrugX-related cost', 20, 0, 5000, 100,
+        description='DrugX-related cost per day'),
+    }
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+Run #2 set up
+(Changed settings below; otherwise settings are the same as Run #1)
+--------------------------------------------------
+network.py
+
+def __init__(self, ...):
+	# switch on social distancing at time = 10
+        self.social_distancing = SocialDistancing(1, self, edge_threshold=[0.50],
+                                                  time_period=[(10, 999)], current_time=None,
+                                                  on_switch=True)
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+Run #3 set up
+(Changed settings below; otherwise settings are the same as Run #1)
+--------------------------------------------------
+network.py
+
+def __init__(self, ...):
+	# switch on social distancing at time = 10
+        self.social_distancing = SocialDistancing(1, self, edge_threshold=[0.50],
+                                                  time_period=[(10, 999)], current_time=None,
+                                                  on_switch=True)
+
+	# switch on vaccine at time = 20
+        self.vaccine = Vaccine(1, self, agent=None, prob_vaccinated=[0.15],
+                               vaccine_success_rate=[0.80], time_period=[(20, 999)],
+                               current_time=None, on_switch=True)
