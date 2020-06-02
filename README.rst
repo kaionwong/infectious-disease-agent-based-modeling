@@ -7,8 +7,8 @@ The `Infectious disease agent-based modeling simulator`_ or (ID-ABM) simulator i
 Agents' states
 ------------
 .. image:: https://github.com/kaionwong/infectious-disease-agent-based-modeling/blob/master/project_result/patient_states_diagram.png
-   :width: 70%
-   :height: 70%
+   :width: 85%
+   :scale: 50%
    :alt: Patient states diagram
 
 The ID-ABM is based on a susceptible-infected-dead-recovered (SIDR) model, such that the possible primary health state of a given individual or agent includes:
