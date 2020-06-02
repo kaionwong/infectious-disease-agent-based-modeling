@@ -11,7 +11,7 @@ Agents' states
    :scale: 50%
    :alt: Patient states diagram
 
-The ID-ABM is based on a susceptible-infected-dead-recovered (SIDR) model, such that the possible primary health state of a given individual or agent includes:
+The ID-ABM is based on a susceptible-infected-dead-recovered (SIDR) model, such that the possible primary health state of a given individual or agent/host includes:
 
 * Susceptible
 
