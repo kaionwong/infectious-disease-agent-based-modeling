@@ -21,7 +21,7 @@ The ID-ABM is based on a susceptible-infected-dead-recovered (SIDR) model, such 
 
 * Dead (due to studied infectious disease)
 
-More specifically, agents tend to have additional or more detailed health or disease states. This is captured in the ID-ABM. The specific symptom states for an infectious agent include:
+More specifically, agents tend to have additional or more detailed health or disease states. This is captured in the ID-ABM. The specific symptom state for an infectious agent includes:
 
 * Asymptomatic
 
@@ -31,13 +31,13 @@ More specifically, agents tend to have additional or more detailed health or dis
 
 * Critical symptom
 
-The specific immunity states for a recovered agent include:
+The specific immunity state for a recovered agent includes:
 
 * Susceptible
 
 * Immune
 
-The specific complication states for a recovered agent include:
+The specific complication state for a recovered agent includes:
 
 * No complication
 
