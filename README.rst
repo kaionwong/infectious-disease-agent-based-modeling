@@ -72,7 +72,7 @@ Key features of the ID-ABM's include:
 
 .. code-block:: bash
 
-    # Vaccination probability at 0.80 and vaccine success rate at 0.75 from time 10 to 29; vaccination      probability at 0.25 and vaccine success rate at 0.80 from time 30 to 49
+    # Vaccination probability at 0.80 and vaccine success rate at 0.75 from time 10 to 29; vaccination probability at 0.25 and vaccine success rate at 0.80 from time 30 to 49
     self.vaccine = Vaccine(1, self, agent=None, prob_vaccinated=[0.80, 0.25],
                            vaccine_success_rate=[0.75, 0.80], time_period=[(10, 30), (30, 50)],
                            current_time=None, on_switch=True)
