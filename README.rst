@@ -9,7 +9,7 @@ Agents' states
 .. image:: https://github.com/kaionwong/infectious-disease-agent-based-modeling/blob/master/project_result/patient_states_diagram.png
    :width: 75%
    :height: 75%
-   :scale: 60%
+   :scale: 100%
    :alt: Patient states diagram
 
 The ID-ABM is based on a susceptible-infected-dead-recovered (SIDR) model, such that the possible primary health state of a given individual or agent includes:
