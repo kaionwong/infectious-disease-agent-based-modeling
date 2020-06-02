@@ -162,4 +162,4 @@ Three simulated runs were shown below to demonstrate the effects of social dista
 
 References
 ------------
-* Venkatramanan S, Lewis B, Chen J, et al. Using data-driven agent-based models for forecasting emerginginfectious diseases. Epidemics 2018;22:43-9.
+* Venkatramanan S, Lewis B, Chen J, et al. Using data-driven agent-based models for forecasting emerging infectious diseases. Epidemics 2018;22:43-9.
