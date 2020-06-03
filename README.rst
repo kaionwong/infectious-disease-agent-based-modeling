@@ -1,6 +1,6 @@
 Infectious disease agent-based modeling simulator
 =========================================
-Agent-based models (ABMs) are computer simulations used to study complex interactions between agents, time, and environment. ABMs are stochastic models built from the bottom up as individual agents (such as people in epidemiology) are assigned with certain attributes and behaviours. These agents are then programmed to behave and interact with other agents and environment by simple rules. In addition to being an interactive tool to understand causal mechanisms, ABMs can help make real-world predictions when real-world data is used to fine-tune the parameters of the model.
+Agent-based models (ABMs) are computer simulations used to study complex interactions between agents, time, and environment. ABMs are stochastic models built from the bottom up as individual agents (such as people in epidemiology) are assigned with certain attributes and behaviours. These agents are then programmed to behave and interact with other agents and environment by simple rules. ABM is particularly useful when the interactions between system components are complex and non-linear, when the overall population is heterogeneous, and when the agents are capable to learn and adapt to their environments (Bonabeau 2002). In addition to being an interactive tool to help understand causal mechanisms, ABMs can help make real-world predictions when real-world data is used to fine-tune the parameters of the model.
 
 The `Infectious disease agent-based modeling simulator`_ or (ID-ABM) simulator is an Apache2 licensed ABM simulator specific for infectious diseases. The ID-ABM's core is built on top of the Python 3 ABM library `Mesa <https://github.com/projectmesa/mesa>`_. The ID-ABM simulator contains a number of key features important to dynamically model infectious disease transmission and related epidemiologic measures. The key features are controlled by various adjustable model parameters. The large number of parameters enables one to model a wide spectrum of infectious diseases in a simulated population, as well as to model different scenarios such as implementation of various public health interventions, for a given infectious disease. This simulator is modular, hence adding new features or modifying existing features should be readily accessible.
 
@@ -162,4 +162,5 @@ Three simulated runs were shown below to demonstrate the effects of social dista
 
 References
 ------------
-* Venkatramanan S, Lewis B, Chen J, et al. Using data-driven agent-based models for forecasting emerging infectious diseases. Epidemics 2018;22:43-9.
+* Bonabeau E. Agent-based modeling: methods and techniques for simulating human systems. Proceedings of the National Academy of Sciences of the United States of America 2002; 99:7287-7287.
+* Venkatramanan S, Lewis B, Chen J, et al. Using data-driven agent-based models for forecasting emerging infectious diseases. Epidemics 2018; 22:43-9.
