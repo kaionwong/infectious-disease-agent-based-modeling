@@ -162,5 +162,5 @@ Three simulated runs were shown below to demonstrate the effects of social dista
 
 References
 ------------
-* Bonabeau E. Agent-based modeling: methods and techniques for simulating human systems. Proceedings of the National Academy of Sciences of the United States of America 2002; 99:7287-7287.
+* Bonabeau E. Agent-based modeling: methods and techniques for simulating human systems. Proceedings of the National Academy of Sciences of the United States of America 2002; 99:7280-7287.
 * Venkatramanan S, Lewis B, Chen J, et al. Using data-driven agent-based models for forecasting emerging infectious diseases. Epidemics 2018; 22:43-9.
