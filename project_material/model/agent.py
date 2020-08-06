@@ -409,7 +409,7 @@ class HostAgent(Agent):
 
             self.prob_spread_virus = self.model.prob_spread_virus_dist.get_pdf_prob_by_x()
             self.prob_recover = self.model.prob_recover_dist.get_pdf_prob_by_x()
-            self.prob_virus_kill_host = self.model.prob_virus_kill_host_dist.get_cdf_prob_by_x() # WARNING: More realistic?
+            self.prob_virus_kill_host = self.model.prob_virus_kill_host_dist.get_cdf_prob_by_x()
 
             self.model.prob_infectious_no_to_mild_symptom_dist.x = self._timer_since_beginning_of_last_infection
             self.model.prob_infectious_no_to_severe_symptom_dist.x = self._timer_since_beginning_of_last_infection
