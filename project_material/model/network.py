@@ -622,7 +622,6 @@ class HostNetwork(Model):
             return {'M': math.inf, 'F': math.inf}
 
     def mean_r0(self):
-        '''WARNING: Need triple check, does not look correct right now'''
         number_infectious_active_in_last_n_time_units = 0
         number_new_infection_in_last_n_time_units = 0
         last_n_time_unit = self._last_n_time_unit_for_mean_r0
